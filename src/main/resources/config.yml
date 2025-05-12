@@ -1,0 +1,9 @@
+# Mending repairs (experience gained * multiplier), where multiplier by default is 2 (can be decimal)
+xp_multiplier: 2
+# Allows players to use their current exp to repair items
+allow_self_repair: true
+# How much exp it costs to self repair (whole number)
+self_repair_cost: 6
+# How much durability is given to the tool being repaired (whole number)
+# Note: This is still affected by the xp_multiplier
+self_repair_amount: 6

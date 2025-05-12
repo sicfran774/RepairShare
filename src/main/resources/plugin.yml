@@ -1,0 +1,25 @@
+name: RepairShare
+version: '1.0'
+main: io.sicfran.repairShare.RepairShare
+api-version: '1.21'
+permissions:
+  repair.*:
+    description: Gives access to all RepairShare commands and features
+    default: op
+    children:
+      repair.auto_mend: true
+      repair.self_mend: true
+      repair.toggle: true
+      repair.reload: true
+  repair.auto_mend:
+    description: Allows repairing tools with mending in a player's inventory when XP is gained automatically
+    default: true
+  repair.self_mend:
+    description: Allows repairing tools by consuming current XP
+    default: true
+  repair.toggle:
+    description: Allow player to toggle on/off auto mend and self mend
+    default: true
+  repair.reload:
+    description: Allow running /repair reload command to update config.yml
+    default: op
