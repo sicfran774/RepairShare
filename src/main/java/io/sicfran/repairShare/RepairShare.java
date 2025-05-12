@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import io.sicfran.repairShare.listeners.OnExpChange;
 import io.sicfran.repairShare.listeners.SelfRepair;
+import io.sicfran.repairShare.tools.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -78,6 +79,10 @@ public final class RepairShare extends JavaPlugin {
                 LifecycleEvents.COMMANDS, commands ->
                         commands.registrar().register(root.build())
         );
+
+        //initialize bstats metrics
+        int pluginId = 25831;
+        new Metrics(this, pluginId);
 
         this.getLogger().info("RepairShare v" + VERSION + " successfully enabled!");
 
