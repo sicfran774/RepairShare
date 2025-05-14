@@ -9,6 +9,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import io.sicfran.repairShare.listeners.OnExpChange;
 import io.sicfran.repairShare.listeners.SelfRepair;
 import io.sicfran.repairShare.tools.Metrics;
+import io.sicfran.repairShare.tools.Requests;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -17,10 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -86,7 +83,8 @@ public final class RepairShare extends JavaPlugin {
 
         this.getLogger().info("RepairShare v" + VERSION + " successfully enabled!");
 
-        checkIfNewVersion();
+        List<String> messages = Requests.checkIfNewVersion(VERSION);
+        Requests.logMessages(this, messages);
     }
 
     private int reloadConfigCommand(CommandContext<CommandSourceStack> ctx){
@@ -112,35 +110,7 @@ public final class RepairShare extends JavaPlugin {
         }
     }
 
-    private void checkIfNewVersion(){
-        try{
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://hangar.papermc.io/api/v1/projects/sicfran/RepairShare/versions"))
-                    .GET()
-                    .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String body = response.body();
-
-            // Find the first occurrence of "name":"<version>"
-            int nameIndex = body.indexOf("\"name\":\"");
-            if (nameIndex == -1) return;
-
-            int start = nameIndex + 8; // length of "name":" is 8
-            int end = body.indexOf("\"", start);
-            String latestVersion = body.substring(start, end);
-
-            if(!VERSION.equals(latestVersion)){
-                getLogger().info("New version available! v" + latestVersion);
-                getLogger().info("Download here: https://hangar.papermc.io/sicfran/RepairShare");
-            }
-        } catch (Exception e){
-            getLogger().info("Failed to check if there is a new version. Please check " +
-                    "https://hangar.papermc.io/api/v1/projects/sicfran/RepairShare/versions" +
-                    " for updates.");
-        }
-    }
 
     @Override
     public void onDisable() {
