@@ -45,6 +45,9 @@ public class SelfRepair implements Listener {
         if(!sneakingPlayers.contains(player.getUniqueId())) return;
         if(!(event.getHand() == EquipmentSlot.HAND)) return;
 
+        // Ignore if not a right click
+        if(!event.getAction().isRightClick()) return;
+
         PlayerInventory inventory = player.getInventory();
         ItemStack itemInHand = inventory.getItemInMainHand();
 
