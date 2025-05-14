@@ -133,7 +133,7 @@ public final class RepairShare extends JavaPlugin {
 
             if(!VERSION.equals(latestVersion)){
                 getLogger().info("New version available! v" + latestVersion);
-                getLogger().info("Download here: ");
+                getLogger().info("Download here: https://hangar.papermc.io/sicfran/RepairShare");
             }
         } catch (Exception e){
             getLogger().info("Failed to check if there is a new version. Please check " +
